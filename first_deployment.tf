@@ -31,3 +31,25 @@ resource "aws_docdb_cluster" "proj_devops" {
   #preferred_backup_window = "07:00-09:00"
   skip_final_snapshot     = true
 }
+resource "aws_dynamodb_table" "table1" {
+  name = "table1"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 20
+  write_capacity = 20
+  hash_key  = "UserId"
+  attribute {
+    name = "UserId"
+    type = "S"
+  }
+}
+resource "aws_db_instance" "base1" {
+  allocated_storage    = 20
+  storage_type         = "gp2"
+  engine               = "mysql"
+  engine_version       = "5.7"
+  instance_class       = "db.t2.micro"
+  name                 = "mine"
+  username             = "foo"
+  password             = "foo123456"
+  parameter_group_name = "default.mysql5.7"
+}
